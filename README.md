@@ -1,9 +1,9 @@
 # A novel Fourier neural operator framework for classification of multi-sized images
 ![pic](./Fig1_V2.png) <br>
-**Schematic of the proposed FNO-based framework for multi-size image classification**
+**Schematic of the proposed FNO-based framework for multi-size image classification** <be>
+
 
 **Author:** Ali Kashefi (kashefi@stanford.edu)<br>
-      
 **Citation** <br>
 If you use the code, please cite the following journal paper: <br>
 
