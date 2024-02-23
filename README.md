@@ -1,4 +1,5 @@
 # A novel Fourier neural operator framework for classification of multi-sized images
+![pic](./Figure1-1.png) <be>
 
 **Author:** Ali Kashefi (kashefi@stanford.edu)<br>
       
