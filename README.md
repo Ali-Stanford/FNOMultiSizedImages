@@ -5,7 +5,7 @@
 **Citations** <br>
 If you use the code, please cite the following journal paper: <br>
 
-<b>#1</b> **[A novel Fourier neural operator framework for classification of multi-sized images: Application to 3D digital porous media](https://arxiv.org/abs/2402.11568)**
+**[A novel Fourier neural operator framework for classification of multi-sized images: Application to 3D digital porous media](https://arxiv.org/abs/2402.11568)**
 
 **Abstract** <be>
 
