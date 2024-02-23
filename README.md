@@ -2,7 +2,7 @@
 
 **Author:** Ali Kashefi (kashefi@stanford.edu)<br>
       
-**Citations** <br>
+**Citation** <br>
 If you use the code, please cite the following journal paper: <br>
 
 **[A novel Fourier neural operator framework for classification of multi-sized images: Application to 3D digital porous media](https://arxiv.org/abs/2402.11568)**
