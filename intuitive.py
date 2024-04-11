@@ -251,10 +251,10 @@ class SimpleBlock3d(nn.Module):
       
         self.fc30 = nn.Linear(64*2, 1)
 
-        #self.AdaptAve3d = nn.AdaptiveAvgPool3d(4)
-        #self.AdaptAve3d = nn.AdaptiveAvgPool3d(2) # for width of 64
-        self.AdaptAve3d = nn.AdaptiveAvgPool3d(3) # for width of 64
-
+	#self.AdaptAve3d = nn.AdaptiveAvgPool3d(2) # for width of 8
+        #self.AdaptAve3d = nn.AdaptiveAvgPool3d(3) # for width of 27
+        self.AdaptAve3d = nn.AdaptiveAvgPool3d(4) # for width of 64
+       
     def forward(self, x):
         batchsize = x.shape[0]
         size_x, size_y, size_z = x.shape[1], x.shape[2], x.shape[3]
