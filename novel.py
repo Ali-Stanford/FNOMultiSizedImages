@@ -1,4 +1,4 @@
-##### Physics-informed PointNet (PIPN) for weakly-supervised learning of 2D linear elasticity on multiple sets of irregular geometries #####
+##### A novel Fourier neural operator framework for classification of multi-sized images #####
 
 #Author: Ali Kashefi (kashefi@stanford.edu)
 
