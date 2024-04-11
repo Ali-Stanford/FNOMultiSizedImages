@@ -69,10 +69,7 @@ class CubeDataset(Dataset):
 #########################################################
 
 def generate_fake_data(cube_size, num_datasets):
-    # Initialize an empty array for the 3D arrays and an empty list for the random numbers
-    #array_list = np.empty((num_datasets, cube_size, cube_size, cube_size,1), dtype=int)
     array_list = zeros([num_datasets,cube_size,cube_size,cube_size,1],dtype='f')
-    #random_numbers = []
     random_numbers = zeros(num_datasets,dtype='f')
 
     for i in range(num_datasets):
@@ -82,7 +79,6 @@ def generate_fake_data(cube_size, num_datasets):
 
         # Generate a single random real number between 0 and 1
         random_number = np.random.rand()
-        #random_numbers.append(random_number)
         random_numbers[i] = random_number
 
     return array_list, random_numbers
@@ -94,8 +90,6 @@ data_i = 1250
 
 # Generate 1250 "fake" datasets of a 40x40x40 cube
 input_data_40, output_data_40 = generate_fake_data(40, data_i)
-print(input_data_40.shape)
-print(output_data_40.shape)
 
 # Generate 1250 "fake" datasets of a 48x48x48 cube
 input_data_48, output_data_48 = generate_fake_data(48, data_i)
