@@ -51,6 +51,114 @@ class CubeDataset(Dataset):
         x = self.data[idx]
         y = self.targets[idx]
         return x, y
+#########################################################
+def generate_fake_data(cube_size, num_datasets):
+    # Initialize an empty array for the 3D arrays and an empty list for the random numbers
+    #array_list = np.empty((num_datasets, cube_size, cube_size, cube_size,1), dtype=int)
+    array_list = zeros([num_datasets,cube_size,cube_size,cube_size,1],dtype='f')
+    #random_numbers = []
+    random_numbers = zeros(num_datasets,dtype='f')
+
+    for i in range(num_datasets):
+        # Generate a 3D array with random integers 0 or 1
+        cube_data = np.random.randint(2, size=(cube_size, cube_size, cube_size))
+        array_list[i, :, :, :,0] = cube_data
+
+        # Generate a single random real number between 0 and 1
+        random_number = np.random.rand()
+        #random_numbers.append(random_number)
+        random_numbers[i] = random_number
+
+    return array_list, random_numbers
+	
+############################################
+data_i = 1250 
+
+# Generate 1250 "fake" datasets of a 40x40x40 cube
+input_data_40, output_data_40 = generate_fake_data(40, data_i)
+print(input_data_40.shape)
+print(output_data_40.shape)
+
+# Generate 1250 "fake" datasets of a 48x48x48 cube
+input_data_48, output_data_48 = generate_fake_data(48, data_i)
+
+# Generate 1250 "fake" datasets of a 56x56x56 cube
+input_data_56, output_data_56 = generate_fake_data(56, data_i)
+
+# Data spliting for size 40
+total_indices = data_i
+all_indices = np.random.permutation(total_indices)
+
+training_idx_40 = all_indices[:int(0.8*total_indices)]
+validation_idx_40 = all_indices[int(0.8*total_indices):int(0.9*total_indices)]
+test_idx_40 = all_indices[int(0.9*total_indices):]
+
+input_training_40, input_test_40, input_validation_40 = input_data_40[training_idx_40,:], input_data_40[test_idx_40,:], input_data_40[validation_idx_40,:]
+output_training_40, output_test_40, output_validation_40 = output_data_40[training_idx_40], output_data_40[test_idx_40], output_data_40[validation_idx_40]
+                         
+#Normalize between [0,1] with sigmoid function 
+k_max_40 = np.max(output_training_40)
+k_min_40 = np.min(output_training_40)
+
+output_training_40 = (output_data_40 - k_max_40)/(k_max_40 - k_min_40)
+output_validation_40 = (output_validation_40 - k_min_40)/(k_max_40 - k_min_40)
+output_test_40 = (output_test_40 - k_min_40)/(k_max_40 - k_min_40)
+
+dataset_40 = CubeDataset(input_training_40, output_training_40)
+dataloader_40 = DataLoader(dataset_40, batch_size=50, shuffle=True, drop_last=False)
+
+dataset_40_validation = CubeDataset(input_validation_40, output_validation_40)
+dataloader_40_validation = DataLoader(dataset_40_validation, batch_size=40, shuffle=True, drop_last=False)
+
+##################### Data spliting for size 48 #####################
+total_indices = data_i
+all_indices = np.random.permutation(total_indices)
+
+training_idx_48 = all_indices[:int(0.8*total_indices)]
+validation_idx_48 = all_indices[int(0.8*total_indices):int(0.9*total_indices)]
+test_idx_48 = all_indices[int(0.9*total_indices):]
+
+input_training_48, input_test_48, input_validation_48 = input_data_48[training_idx_48,:], input_data_48[test_idx_48,:], input_data_48[validation_idx_48,:]
+output_training_48, output_test_48, output_validation_48 = output_data_48[training_idx_48], output_data_48[test_idx_48], output_data_48[validation_idx_48]
+                         
+#Normalize between [0,1] with sigmoid function 
+k_max_48 = np.max(output_training_48)
+k_min_48 = np.min(output_training_48)
+
+output_training_48 = (output_data_40 - k_max_40)/(k_max_48 - k_min_48)
+output_validation_48 = (output_validation_48 - k_min_48)/(k_max_48 - k_min_48)
+output_test_48 = (output_test_48 - k_min_48)/(k_max_48 - k_min_48)
+
+dataset_48 = CubeDataset(input_training_48, output_training_48)
+dataloader_48 = DataLoader(dataset_48, batch_size=50, shuffle=True, drop_last=False)
+
+dataset_48_validation = CubeDataset(input_validation_48, output_validation_48)
+dataloader_48_validation = DataLoader(dataset_48_validation, batch_size=40, shuffle=True, drop_last=False)
+
+##################### Data spliting for size 56 #####################
+total_indices = data_i
+all_indices = np.random.permutation(total_indices)
+
+training_idx_56 = all_indices[:int(0.8*total_indices)]
+validation_idx_56 = all_indices[int(0.8*total_indices):int(0.9*total_indices)]
+test_idx_56 = all_indices[int(0.9*total_indices):]
+
+input_training_56, input_test_56, input_validation_56 = input_data_56[training_idx_56,:], input_data_56[test_idx_56,:], input_data_56[validation_idx_56,:]
+output_training_56, output_test_56, output_validation_56 = output_data_56[training_idx_56], output_data_56[test_idx_56], output_data_56[validation_idx_56]
+                         
+#Normalize between [0,1] with sigmoid function 
+k_max_56 = np.max(output_training_56)
+k_min_56 = np.min(output_training_56)
+
+output_training_56 = (output_data_56 - k_max_56)/(k_max_56 - k_min_56)
+output_validation_56 = (output_validation_56 - k_min_56)/(k_max_56 - k_min_56)
+output_test_56 = (output_test_56 - k_min_56)/(k_max_56 - k_min_56)
+
+dataset_56 = CubeDataset(input_training_56, output_training_56)
+dataloader_56 = DataLoader(dataset_56, batch_size=50, shuffle=True, drop_last=False)
+
+dataset_56_validation = CubeDataset(input_validation_56, output_validation_56)
+dataloader_56_validation = DataLoader(dataset_56_validation, batch_size=40, shuffle=True, drop_last=False)
 
 #########################################################
 
