@@ -287,7 +287,7 @@ for epoch in range(num_epochs):
             loss = loss_function(outputs, targets)
             val_loss_56 += loss.item()
 
-    val_losses.append((val_loss_56+val_loss_48+val_loss_64)/(len(dataloader_48) + len(dataloader_56) + len(dataloader_40)))
+    val_losses.append((val_loss_56+val_loss_48+val_loss_40)/(len(dataloader_48) + len(dataloader_56) + len(dataloader_40)))
 
 ##################
 ### save model ###
