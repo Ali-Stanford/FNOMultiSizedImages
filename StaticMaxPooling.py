@@ -66,7 +66,7 @@ class SpectralConv3d(nn.Module):
         """
         self.in_channels = in_channels
         self.out_channels = out_channels
-        self.modes1 = modes1 #Number of Fourier modes to multiply, at most floor(N/2) + 1
+        self.modes1 = modes1 
         self.modes2 = modes2
         self.modes3 = modes3
 
