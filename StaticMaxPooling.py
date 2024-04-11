@@ -1,3 +1,62 @@
+import os
+import random
+import time
+import timeit
+import linecache
+import math
+from operator import itemgetter
+import numpy as np
+from numpy import zeros
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif']
+#from mpl_toolkits.mplot3d import Axes3D
+#import matplotlib.tri as tri
+#from mpl_toolkits import mplot3d
+
+#################
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+import operator
+from functools import reduce
+from functools import partial
+
+import torch.optim as optim
+from torch.utils.data import DataLoader, TensorDataset
+
+import random
+from torch.utils.data import Dataset, DataLoader
+from itertools import cycle
+
+if torch.cuda.is_available():
+    device = torch.device("cuda")  # GPU available
+else:
+    device = torch.device("cpu")  # Only CPU available
+
+torch.manual_seed(0)
+
+#########################################################
+
+class CubeDataset(Dataset):
+    def __init__(self, data, targets):
+        self.data = data
+        self.targets = targets
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        x = self.data[idx]
+        y = self.targets[idx]
+        return x, y
+
+
 class SpectralConv3d(nn.Module):
     def __init__(self, in_channels, out_channels, modes1, modes2, modes3):
         super(SpectralConv3d, self).__init__()
