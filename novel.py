@@ -51,7 +51,9 @@ class CubeDataset(Dataset):
         x = self.data[idx]
         y = self.targets[idx]
         return x, y
+	    
 #########################################################
+
 def generate_fake_data(cube_size, num_datasets):
     # Initialize an empty array for the 3D arrays and an empty list for the random numbers
     #array_list = np.empty((num_datasets, cube_size, cube_size, cube_size,1), dtype=int)
@@ -72,6 +74,8 @@ def generate_fake_data(cube_size, num_datasets):
     return array_list, random_numbers
 	
 ############################################
+#In practice, real data must be loaded. However, here we generate fake data solely for testing the model architecture.
+
 data_i = 1250 
 
 # Generate 1250 "fake" datasets of a 40x40x40 cube
