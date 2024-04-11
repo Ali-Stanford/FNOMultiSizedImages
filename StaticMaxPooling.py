@@ -56,6 +56,7 @@ class CubeDataset(Dataset):
         y = self.targets[idx]
         return x, y
 
+#########################################################
 
 class SpectralConv3d(nn.Module):
     def __init__(self, in_channels, out_channels, modes1, modes2, modes3):
@@ -101,6 +102,7 @@ class SpectralConv3d(nn.Module):
         return x
 
 ##################################
+
 class SimpleBlock3d(nn.Module):
     def __init__(self, modes1, modes2, modes3, width):
         super(SimpleBlock3d, self).__init__()
@@ -181,7 +183,6 @@ class SimpleBlock3d(nn.Module):
         
         return x
 
-#################################
 #################################
 # Initialize the model, loss function, and optimizer
 modes1 = 2 
