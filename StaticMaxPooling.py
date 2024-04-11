@@ -182,12 +182,12 @@ class SimpleBlock3d(nn.Module):
         return x
 
 #################################
+#################################
 # Initialize the model, loss function, and optimizer
-
 modes1 = 2 
 modes2 = 2 
 modes3 = 2 
-width = 27 #64
+width = 64
 
 model = SimpleBlock3d(modes1, modes2, modes3, width)
 model = model.to(device)
@@ -198,7 +198,7 @@ total_params = sum(p.numel() for p in model.parameters())
 print(f"Total number of parameters: {total_params}")
 
 # Training loop
-num_epochs = 5000
+num_epochs = 3000
 train_losses = []
 val_losses = []
 best_loss = float('inf')
@@ -208,8 +208,10 @@ for epoch in range(num_epochs):
     running_loss = 0.0
 
     dataiter1 = iter(dataloader_64)
+    dataiter2 = iter(dataloader_48)
+    dataiter3 = iter(dataloader_56)
 
-    for sub_epoch in range(len(dataloader_64)):
+    for sub_epoch in range(max(len(dataloader_64), len(dataloader_48), len(dataloader_56))):
 
         # Training on loader1 data
         try:
@@ -227,11 +229,43 @@ for epoch in range(num_epochs):
         except StopIteration:
             pass
 
-    avg_loss = running_loss / (len(dataloader_64))
+        # Training on loader2 data
+        try:
+            inputs, targets = next(dataiter2)
+            inputs = inputs.to(torch.float32).to(device)
+            targets = targets.to(torch.float32).to(device)
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            outputs = outputs.squeeze()
+            loss = loss_function(outputs, targets)
+            loss.backward()
+            optimizer.step()
+            running_loss += loss.item()
+            #print(f"Epoch: {epoch+1}, Sub-Epoch: {sub_epoch+1}, Dataset: 2, Loss: {loss.item()}")
+        except StopIteration:
+            pass
+
+	# Training on loader3 data
+        try:
+            inputs, targets = next(dataiter3)
+            inputs = inputs.to(torch.float32).to(device)
+            targets = targets.to(torch.float32).to(device)
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            outputs = outputs.squeeze()
+            loss = loss_function(outputs, targets)
+            loss.backward()
+            optimizer.step()
+            running_loss += loss.item()
+            #print(f"Epoch: {epoch+1}, Sub-Epoch: {sub_epoch+1}, Dataset: 3, Loss: {loss.item()}")
+        except StopIteration:
+            pass
+
+    avg_loss = running_loss / (len(dataloader_56) + len(dataloader_48) + len(dataloader_64))
     train_losses.append(avg_loss)
 
     # Print the average loss for this epoch
-    print(f"Epoch {epoch + 1}, Loss: {running_loss / (len(dataloader_64))}")
+    print(f"Epoch {epoch + 1}, Loss: {running_loss / (len(dataloader_48) + len(dataloader_56) + len(dataloader_64))}")
 
 # Begin validation for dataloader_40_validation
     model.eval()
@@ -245,12 +279,32 @@ for epoch in range(num_epochs):
             loss = loss_function(outputs, targets)
             val_loss_64 += loss.item()
 
-    val_losses.append(val_loss_64)
+# Begin validation for dataloader_48_validation
+   
+    val_loss_48 = 0.0
+    with torch.no_grad():
+        for inputs, targets in dataloader_48_validation:
+            inputs = inputs.to(torch.float32).to(device)
+            targets = targets.to(torch.float32).to(device)
+            outputs = model(inputs).squeeze()
+            loss = loss_function(outputs, targets)
+            val_loss_48 += loss.item()
+
+# Begin validation for dataloader_56_validation
+    val_loss_56 = 0.0
+    with torch.no_grad():
+        for inputs, targets in dataloader_56_validation:
+            inputs = inputs.to(torch.float32).to(device)
+            targets = targets.to(torch.float32).to(device)
+            outputs = model(inputs).squeeze()
+            loss = loss_function(outputs, targets)
+            val_loss_56 += loss.item()
+
+    val_losses.append((val_loss_56+val_loss_48+val_loss_64)/(len(dataloader_48) + len(dataloader_56) + len(dataloader_64)))
 
 ##################
 ### save model ###
-
-torch.save(model.state_dict(), 'model_checkpoint.pth')
+#torch.save(model.state_dict(), 'model_checkpoint.pth')
 
 # Function for plotting the training loss based on epoch
 
