@@ -314,7 +314,7 @@ total_params = sum(p.numel() for p in model.parameters())
 print(f"Total number of parameters: {total_params}")
 
 # Training loop
-num_epochs = 3000
+num_epochs = 5000
 train_losses = []
 val_losses = []
 best_loss = float('inf')
