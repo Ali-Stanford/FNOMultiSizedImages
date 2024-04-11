@@ -106,17 +106,11 @@ class SpectralConv3d(nn.Module):
 class SimpleBlock3d(nn.Module):
     def __init__(self, modes1, modes2, modes3, width):
         super(SimpleBlock3d, self).__init__()
-        """
-        U-FNO contains 3 Fourier layers and 3 U-Fourier layers.
         
-        input shape: (batchsize, x=200, y=96, t=24, c=12)
-        output shape: (batchsize, x=200, y=96, t=24, c=1)
-        """
         self.modes1 = modes1
         self.modes2 = modes2
         self.modes3 = modes3
         self.width = width
-        #self.fc0 = nn.Linear(12, self.width)
         self.fc0 = nn.Linear(1, self.width)
         """        
         1 ch
@@ -169,8 +163,6 @@ class SimpleBlock3d(nn.Module):
         x = self.fc1(x)
         x = F.relu(x)
         
-        #print("Shape of tensor at the intermediate step:", x.shape)
-        
         # Max pool
         x = x.view(x.size(0), -1, x.size(-1)).max(dim=1).values
 
@@ -180,7 +172,6 @@ class SimpleBlock3d(nn.Module):
         x = self.fc30(x)
         
         x = torch.sigmoid(x)
-        
         return x
 
 #################################
