@@ -89,8 +89,6 @@ data_i = 1250
 
 # Generate 1250 "fake" datasets of a 40x40x40 cube
 input_data_40, output_data_40 = generate_fake_data(40, data_i)
-print(input_data_40.shape)
-print(output_data_40.shape)
 
 # Generate 1250 "fake" datasets of a 48x48x48 cube
 input_data_48, output_data_48 = generate_fake_data(48, data_i)
