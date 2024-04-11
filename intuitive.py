@@ -221,25 +221,24 @@ class SpectralConv3d(nn.Module):
 class SimpleBlock3d(nn.Module):
     def __init__(self, modes1, modes2, modes3, width):
         super(SimpleBlock3d, self).__init__()
-        
+       
         self.modes1 = modes1
         self.modes2 = modes2
         self.modes3 = modes3
         self.width = width
+        #self.fc0 = nn.Linear(12, self.width)
         self.fc0 = nn.Linear(1, self.width)
+        self.fc0reverse = nn.Linear(self.width,1)
         """        
         1 ch
         """
         self.conv0 = SpectralConv3d(self.width, self.width, self.modes1, self.modes2, self.modes3)
         self.conv1 = SpectralConv3d(self.width, self.width, self.modes1, self.modes2, self.modes3)
         self.conv2 = SpectralConv3d(self.width, self.width, self.modes1, self.modes2, self.modes3)
-        self.conv3 = SpectralConv3d(self.width, self.width, self.modes1, self.modes2, self.modes3)
-        self.conv4 = SpectralConv3d(self.width, self.width, self.modes1, self.modes2, self.modes3)
-        self.conv5 = SpectralConv3d(self.width, self.width, self.modes1, self.modes2, self.modes3)
         self.w0 = nn.Conv1d(self.width, self.width, 1)
         self.w1 = nn.Conv1d(self.width, self.width, 1)
         self.w2 = nn.Conv1d(self.width, self.width, 1)
-        
+
         self.fc1 = nn.Linear(self.width, self.width)
                
         self.fc10 = nn.Linear(self.width, 64*2)
@@ -251,6 +250,10 @@ class SimpleBlock3d(nn.Module):
         self.dropout20 = nn.Dropout(0.3)
       
         self.fc30 = nn.Linear(64*2, 1)
+
+        #self.AdaptAve3d = nn.AdaptiveAvgPool3d(4)
+        #self.AdaptAve3d = nn.AdaptiveAvgPool3d(2) # for width of 64
+        self.AdaptAve3d = nn.AdaptiveAvgPool3d(3) # for width of 64
 
     def forward(self, x):
         batchsize = x.shape[0]
@@ -278,8 +281,13 @@ class SimpleBlock3d(nn.Module):
         x = self.fc1(x)
         x = F.relu(x)
         
-        # Max pool
-        x = x.view(x.size(0), -1, x.size(-1)).max(dim=1).values
+        x = self.fc0reverse(x) 
+        
+        x= x.squeeze(dim=4)
+
+        x = self.AdaptAve3d(x)
+
+        x = x.view(x.size(0), -1)
 
         # Pass through three fully connected layers with dropout without batch
         x = self.dropout10(F.relu(self.fc10(x)))
@@ -287,6 +295,7 @@ class SimpleBlock3d(nn.Module):
         x = self.fc30(x)
         
         x = torch.sigmoid(x)
+        
         return x
 
 #################################
