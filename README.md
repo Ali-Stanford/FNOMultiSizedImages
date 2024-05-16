@@ -8,11 +8,15 @@
 
 **[A novel Fourier neural operator framework for classification of multi-sized images: Application to 3D digital porous media](https://arxiv.org/abs/2402.11568)**
 
-    @article{kashefi2024novel,
-      title={A novel Fourier neural operator framework for classification of multi-sized images: Application to 3D digital porous media},
-      author={Kashefi, Ali and Mukerji, Tapan},
-      journal={arXiv preprint arXiv:2402.11568},
-      year={2024}}
+    @article{kashefi2024novelFNO,
+      author = {Kashefi, Ali and Mukerji, Tapan},
+      title = "{A novel Fourier neural operator framework for classification of multi-sized images: Application to three dimensional digital porous media}",
+      journal = {Physics of Fluids},
+      volume = {36},
+      number = {5},
+      year = {2024},
+      doi = {10.1063/5.0203977},
+      url = {https://doi.org/10.1063/5.0203977}}
 
 **Abstract** <be>
 
