@@ -7,14 +7,13 @@
 #If you use the code, please cite the following journal papers:
 
 #@article{kashefi2024novelFNO,
-#  author = {Kashefi, Ali and Mukerji, Tapan},
-#  title = "{A novel Fourier neural operator framework for classification of multi-sized images: Application to three dimensional digital porous media}",
-#  journal = {Physics of Fluids},
-#  volume = {36},
-#  number = {5},
-#  year = {2024},
-#  doi = {10.1063/5.0203977},
-#  url = {https://doi.org/10.1063/5.0203977}}
+#  title={A novel Fourier neural operator framework for classification of multi-sized images: Application to three dimensional digital porous media},
+#  author={Kashefi, Ali and Mukerji, Tapan},
+#  journal={Physics of Fluids},
+#  volume={36},
+#  number={5},
+#  year={2024},
+#  publisher={AIP Publishing}}
 
 import os
 import random
